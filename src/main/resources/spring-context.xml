@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="assembler" class="ru.otus.spring.Assembler">
+    <bean id="assembler" class="ru.otus.spring.dao.Assembler">
         <property name="csvFile" value="classpath:questionare.csv"></property>
         <property name="excel" ref="excel"></property>
     </bean>

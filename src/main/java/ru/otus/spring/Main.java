@@ -3,7 +3,8 @@ package ru.otus.spring;
 import java.io.IOException;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
+
+import ru.otus.spring.dao.Assembler;
 
 public class Main {
 
@@ -12,6 +13,7 @@ public class Main {
 
         Assembler assembler=(Assembler) context.getBean("assembler");
         assembler.fillData();
+        assembler.output();
         context.close();
     }
 }
