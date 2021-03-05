@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ExcelRow {
+public class CsvRow {
 
     private String no;
     private String type;

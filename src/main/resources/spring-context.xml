@@ -4,15 +4,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="assembler" class="ru.otus.spring.dao.Assembler">
+    <bean id="transformer" class="ru.otus.spring.service.DataTransformer">
         <property name="csvFile" value="classpath:questionare.csv"></property>
-        <property name="excel" ref="excel"></property>
+        <property name="csv" ref="csv"></property>
     </bean>
 
-    <bean id="excel" class="ru.otus.spring.dao.Excel">
-        <property name="rows" ref="excelRow"></property>
+    <bean id="csv" class="ru.otus.spring.dao.CsvDao">
+        <property name="rows" ref="csvRow"></property>
     </bean>
 
-    <bean id = "excelRow" class = "ru.otus.spring.domain.ExcelRow"/>
+    <bean id = "csvRow" class = "ru.otus.spring.domain.CsvRow"/>
 
 </beans>

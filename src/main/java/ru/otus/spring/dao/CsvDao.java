@@ -2,18 +2,17 @@ package ru.otus.spring.dao;
 
 import java.util.List;
 
-
 import lombok.Getter;
 import lombok.Setter;
-import ru.otus.spring.domain.ExcelRow;
+import ru.otus.spring.domain.CsvRow;
 
 @Setter
 @Getter
-public class Excel {
+public class CsvDao {
 
-    private List<ExcelRow> rows;
+    private List<CsvRow> rows;
 
-    public void addRow(ExcelRow row) {
+    public void addRow(CsvRow row) {
         this.rows.add(row);
     }
 
