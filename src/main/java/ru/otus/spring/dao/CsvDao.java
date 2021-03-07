@@ -12,6 +12,10 @@ public class CsvDao {
 
     private List<CsvRow> rows;
 
+    public CsvDao(List<CsvRow> rows) {
+        this.rows = rows;
+    }
+
     public void addRow(CsvRow row) {
         this.rows.add(row);
     }

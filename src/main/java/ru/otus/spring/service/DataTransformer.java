@@ -1,11 +1,10 @@
 package ru.otus.spring.service;
 
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -25,6 +24,11 @@ public class DataTransformer {
     private Resource csvFile;
     private CsvDao csv;
 
+    public DataTransformer(Resource csvFile, CsvDao csv) {
+        this.csvFile = csvFile;
+        this.csv = csv;
+    }
+
     private CSVParser getCsv() throws IOException {
         InputStream is=csvFile.getInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -32,9 +36,8 @@ public class DataTransformer {
     }
 
     public void fillData() throws IOException {
-        CSVParser parser = getCsv();
-
-        for (CSVRecord record : parser) {
+        csv.setRows(new ArrayList<>());
+        for (CSVRecord record : getCsv()) {
             CsvRow row = new CsvRow();
             row.setNo(record.get("no"));
             row.setType(record.get("type"));
