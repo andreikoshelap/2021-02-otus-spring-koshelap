@@ -10,10 +10,12 @@ public class CsvRow {
     private String no;
     private String type;
     private String question;
-    private String answerOne;
-    private String answerTwo;
-    private String answerThree;
-    private String answerFour;
-    private String answerFive;
-    private String answerSix;
+    private String answerA;
+    private String answerB;
+    private String answerC;
+    private String answerD;
+    private String answerE;
+    private String answerF;
+    private String correctAnswer;
+
 }
