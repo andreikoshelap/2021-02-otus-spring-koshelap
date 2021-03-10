@@ -10,16 +10,12 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.core.io.Resource;
 
-import lombok.Getter;
-import lombok.Setter;
 import ru.otus.spring.domain.CsvRow;
 import ru.otus.spring.ui.Quiz;
 
-@Setter
-@Getter
 public class DataTransformer {
 
-    private static final char DELIMITER = ';';
+    protected static final char DELIMITER = ';';
     private Resource csvFile;
     private Quiz quiz;
 
@@ -28,7 +24,7 @@ public class DataTransformer {
         this.quiz = quiz;
     }
 
-    private CSVParser getParsedCsv() throws IOException {
+    protected CSVParser getParsedCsv() throws IOException {
         InputStream is=csvFile.getInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         return CSVFormat.DEFAULT.withDelimiter(DELIMITER).withHeader().parse(br);

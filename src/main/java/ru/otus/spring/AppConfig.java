@@ -9,7 +9,7 @@ import org.springframework.core.io.Resource;
 
 import ru.otus.spring.domain.CsvRow;
 import ru.otus.spring.service.DataTransformer;
-import ru.otus.spring.service.QuestionRepresentation;
+import ru.otus.spring.service.QuizPresentation;
 import ru.otus.spring.ui.Quiz;
 import ru.otus.spring.ui.QuizImpl;
 
@@ -22,12 +22,12 @@ public class AppConfig {
     }
 
     @Bean
-    QuestionRepresentation presentation( Quiz quiz) {
-        return new QuestionRepresentation(quiz);
+    QuizPresentation presentation( Quiz quiz) {
+        return new QuizPresentation(quiz);
     }
 
     @Bean
-    QuizImpl csv(List<CsvRow> csvRows) {
+    Quiz quiz(List<CsvRow> csvRows) {
         return new QuizImpl(csvRows);
     }
 
