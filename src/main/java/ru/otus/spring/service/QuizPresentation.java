@@ -1,5 +1,7 @@
 package ru.otus.spring.service;
 
+import org.springframework.context.MessageSource;
+
 import ru.otus.spring.ui.Quiz;
 
 public class QuizPresentation {
@@ -9,7 +11,7 @@ public class QuizPresentation {
         this.quiz = quiz;
     }
 
-    public void output() {
-        quiz.display();
+    public void output(MessageSource msg) {
+        quiz.display(msg);
     }
 }
