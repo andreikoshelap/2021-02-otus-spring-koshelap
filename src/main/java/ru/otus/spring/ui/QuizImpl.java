@@ -24,6 +24,7 @@ public class QuizImpl implements Quiz {
     private static final String QUESTION_TYPE_WITH_MULTIPLE_ANSWERS = "2";
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_BLUE = "\u001B[34m";
 
     private static final Set<Locale> AVAILABLE_LOCALES = Set.of(
             Locale.ENGLISH,
@@ -78,7 +79,7 @@ public class QuizImpl implements Quiz {
 
     private void defineLanguage() {
         AVAILABLE_LOCALES.stream().forEach(loc-> {
-            System.out.println(msg.getMessage(TITLE_LANGUAGE, null, loc));
+            System.out.println(msg.getMessage(TITLE_LANGUAGE, new String[] {ANSI_BLUE, ANSI_RESET}, loc));
         });
 
         Scanner in = new Scanner(System.in);
@@ -93,7 +94,7 @@ public class QuizImpl implements Quiz {
                 locale  = Locale.ENGLISH;
         }
 
-        output(PICKED_LANGUAGE, new String[] {locale.getLanguage().toUpperCase()});
+        output(PICKED_LANGUAGE, new String[] { ANSI_BLUE, ANSI_RESET});
     }
 
     private int getResult(List<Double> scores) {
@@ -104,8 +105,8 @@ public class QuizImpl implements Quiz {
         getDelimiterLine(p);
         Scanner in = new Scanner(System.in);
         String userAnswer = in.nextLine();
-        output(ENTERED_ANSWER,  new String[] {userAnswer.toUpperCase()});
-        output(CORRECT_ANSWER, new String[] {p.getCorrectAnswer()});
+        output(ENTERED_ANSWER,  new String[] {ANSI_BLUE, userAnswer.toUpperCase(), ANSI_RESET});
+        output(CORRECT_ANSWER, new String[] {ANSI_BLUE, p.getCorrectAnswer(), ANSI_RESET});
         scoringAnswer(userAnswer, p.getCorrectAnswer(), p.getType());
     }
 
@@ -135,10 +136,10 @@ public class QuizImpl implements Quiz {
 
     private void getDelimiterLine(CsvRow p) {
         if (p.getType().equals(QUESTION_TYPE_WITH_ONE_ANSWER)) {
-            output(INSERT_ONE_ANSWER, null);
+            output(INSERT_ONE_ANSWER, new String[] {ANSI_RED, ANSI_RESET});
             return;
         }
-        output(INSERT_MULTIPLE_ANSWER, null);
+        output(INSERT_MULTIPLE_ANSWER, new String[] {ANSI_RED, ANSI_RESET});
     }
 
     private void output( String propertyString, String[] msgParameters) {
