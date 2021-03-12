@@ -19,7 +19,7 @@ public class Spring04Application {
         QuizPresentation presentation = context.getBean(QuizPresentation.class);
         MessageSource msg = context.getBean(MessageSource.class);
         transformer.fillData();
-        presentation.output(msg);
+        presentation.output();
 	}
 
 }

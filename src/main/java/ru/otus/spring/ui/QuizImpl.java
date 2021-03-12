@@ -25,20 +25,30 @@ public class QuizImpl implements Quiz {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
 
-    public static final Set<Locale> AVAILABLE_LOCALES = Set.of(
+    private static final Set<Locale> AVAILABLE_LOCALES = Set.of(
             Locale.ENGLISH,
             new Locale("ru", "RU"),
             new Locale("et", "EE"));
+    private static final String QUIZ_RESULT = "quiz.result";
+    private static final String TITLE_LANGUAGE = "title.language";
+    private static final String ET = "et";
+    private static final String EE = "EE";
+    private static final String SMALL_RU = "ru";
+    private static final String RU = "RU";
+    private static final String PICKED_LANGUAGE = "picked.language";
+    private static final String ENTERED_ANSWER = "entered.answer";
+    private static final String CORRECT_ANSWER = "correct.answer";
+    private static final String INSERT_ONE_ANSWER = "insert.one.answer";
+    private static final String INSERT_MULTIPLE_ANSWER = "insert.multiple.answer";
 
     private List<CsvRow> rows;
-//    private MessageSource msg;
+    private MessageSource msg;
     private List<Double> scores = new ArrayList<>();
     private Locale locale = Locale.ENGLISH;
 
-//    @Autowired
-    public QuizImpl(List<CsvRow> rows) {
+    public QuizImpl(List<CsvRow> rows, MessageSource msg) {
         this.rows = rows;
-//        this.msg = msg;
+        this.msg = msg;
     }
 
     @Override
@@ -47,8 +57,8 @@ public class QuizImpl implements Quiz {
     }
 
     @Override
-    public void display(MessageSource msg) {
-        defineLanguage(msg);
+    public void display() {
+        defineLanguage();
         rows.stream().forEach(p ->{
             System.out.println(p.getNo());
             System.out.println(p.getQuestion());
@@ -61,40 +71,41 @@ public class QuizImpl implements Quiz {
             if(p.getAnswerF() != null && !p.getAnswerF().isEmpty()) {
                 System.out.println(ANSWER_NO_SIX + p.getAnswerF());
             }
-            acceptAndMatchAnswer(p, msg);
+            acceptAndMatchAnswer(p);
         });
-        output(msg, "quiz.result", new String[] {ANSI_RED,  String.valueOf(getResult(scores)), ANSI_RESET } );
+        output(QUIZ_RESULT, new String[] {ANSI_RED,  String.valueOf(getResult(scores)), ANSI_RESET } );
     }
 
-    private void defineLanguage(MessageSource msg) {
+    private void defineLanguage() {
         AVAILABLE_LOCALES.stream().forEach(loc-> {
-            System.out.println(msg.getMessage("title.language", null, loc));
+            System.out.println(msg.getMessage(TITLE_LANGUAGE, null, loc));
         });
 
         Scanner in = new Scanner(System.in);
         switch (in.nextLine().toUpperCase()) {
             case "ET":
-                locale  = new Locale("et", "EE");
+                locale  = new Locale(ET, EE);
                 break;
             case "RU":
-                locale = new Locale("ru", "RU");
+                locale = new Locale(SMALL_RU, RU);
                 break;
             default:
-                locale  = Locale.ENGLISH;        }
+                locale  = Locale.ENGLISH;
+        }
 
-        output(msg, "picked.language", new String[] {locale.getLanguage().toUpperCase()});
+        output(PICKED_LANGUAGE, new String[] {locale.getLanguage().toUpperCase()});
     }
 
     private int getResult(List<Double> scores) {
         return (int) Math.round(scores.stream().reduce(0D, Double::sum) * 100D / Double.valueOf(scores.size()));
     }
 
-    private void acceptAndMatchAnswer(CsvRow p, MessageSource msg) {
-        getDelimiterLine(p, msg);
+    private void acceptAndMatchAnswer(CsvRow p) {
+        getDelimiterLine(p);
         Scanner in = new Scanner(System.in);
         String userAnswer = in.nextLine();
-        output(msg,"entered.answer",  new String[] {userAnswer.toUpperCase()});
-        output(msg, "correct.answer", new String[] {p.getCorrectAnswer()});
+        output(ENTERED_ANSWER,  new String[] {userAnswer.toUpperCase()});
+        output(CORRECT_ANSWER, new String[] {p.getCorrectAnswer()});
         scoringAnswer(userAnswer, p.getCorrectAnswer(), p.getType());
     }
 
@@ -122,15 +133,15 @@ public class QuizImpl implements Quiz {
         return 0D;
     }
 
-    private void getDelimiterLine(CsvRow p, MessageSource msg ) {
+    private void getDelimiterLine(CsvRow p) {
         if (p.getType().equals(QUESTION_TYPE_WITH_ONE_ANSWER)) {
-            output(msg, "insert.one.answer", null);
+            output(INSERT_ONE_ANSWER, null);
             return;
         }
-        output(msg, "insert.multiple.answer", null);
+        output(INSERT_MULTIPLE_ANSWER, null);
     }
 
-    private void output(MessageSource msg, String propertyString, String[] msgParameters) {
+    private void output( String propertyString, String[] msgParameters) {
         System.out.println(msg.getMessage(propertyString, msgParameters, locale));
     }
 }
