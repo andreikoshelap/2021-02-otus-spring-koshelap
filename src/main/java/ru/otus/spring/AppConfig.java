@@ -11,6 +11,8 @@ import org.springframework.core.io.Resource;
 import ru.otus.spring.domain.CsvRow;
 import ru.otus.spring.service.DataTransformer;
 import ru.otus.spring.service.QuizPresentation;
+import ru.otus.spring.ui.Greeting;
+import ru.otus.spring.ui.GreetingsImpl;
 import ru.otus.spring.ui.Quiz;
 import ru.otus.spring.ui.QuizImpl;
 
@@ -23,13 +25,18 @@ public class AppConfig {
     }
 
     @Bean
-    QuizPresentation presentation( Quiz quiz) {
-        return new QuizPresentation(quiz);
+    QuizPresentation presentation( Quiz quiz, Greeting greeting) {
+        return new QuizPresentation(quiz, greeting);
     }
 
     @Bean
     Quiz quiz(List<CsvRow> csvRows, MessageSource msg) {
         return new QuizImpl(csvRows, msg);
+    }
+
+    @Bean
+    Greeting greeting( MessageSource msg) {
+        return new GreetingsImpl( msg);
     }
 
 }

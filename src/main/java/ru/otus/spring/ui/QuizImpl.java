@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.context.MessageSource;
@@ -26,30 +25,27 @@ public class QuizImpl implements Quiz {
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_BLUE = "\u001B[34m";
 
-    private static final Set<Locale> AVAILABLE_LOCALES = Set.of(
-            Locale.ENGLISH,
-            new Locale("ru", "RU"),
-            new Locale("et", "EE"));
     private static final String QUIZ_RESULT = "quiz.result";
-    private static final String TITLE_LANGUAGE = "title.language";
-    private static final String ET = "et";
-    private static final String EE = "EE";
-    private static final String SMALL_RU = "ru";
-    private static final String RU = "RU";
-    private static final String PICKED_LANGUAGE = "picked.language";
     private static final String ENTERED_ANSWER = "entered.answer";
     private static final String CORRECT_ANSWER = "correct.answer";
     private static final String INSERT_ONE_ANSWER = "insert.one.answer";
     private static final String INSERT_MULTIPLE_ANSWER = "insert.multiple.answer";
 
+
     private List<CsvRow> rows;
     private MessageSource msg;
     private List<Double> scores = new ArrayList<>();
-    private Locale locale = Locale.ENGLISH;
+    private Locale locale;
+
 
     public QuizImpl(List<CsvRow> rows, MessageSource msg) {
         this.rows = rows;
         this.msg = msg;
+    }
+
+    @Override
+    public void setLocale(Locale locale) {
+        this.locale = locale;
     }
 
     @Override
@@ -58,8 +54,7 @@ public class QuizImpl implements Quiz {
     }
 
     @Override
-    public void display() {
-        defineLanguage();
+    public void questionsOutput() {
         rows.stream().forEach(p ->{
             System.out.println(p.getNo());
             System.out.println(p.getQuestion());
@@ -77,25 +72,6 @@ public class QuizImpl implements Quiz {
         output(QUIZ_RESULT, new String[] {ANSI_RED,  String.valueOf(getResult(scores)), ANSI_RESET } );
     }
 
-    private void defineLanguage() {
-        AVAILABLE_LOCALES.stream().forEach(loc-> {
-            System.out.println(msg.getMessage(TITLE_LANGUAGE, new String[] {ANSI_BLUE, ANSI_RESET}, loc));
-        });
-
-        Scanner in = new Scanner(System.in);
-        switch (in.nextLine().toUpperCase()) {
-            case "ET":
-                locale  = new Locale(ET, EE);
-                break;
-            case "RU":
-                locale = new Locale(SMALL_RU, RU);
-                break;
-            default:
-                locale  = Locale.ENGLISH;
-        }
-
-        output(PICKED_LANGUAGE, new String[] { ANSI_BLUE, ANSI_RESET});
-    }
 
     private int getResult(List<Double> scores) {
         return (int) Math.round(scores.stream().reduce(0D, Double::sum) * 100D / Double.valueOf(scores.size()));
