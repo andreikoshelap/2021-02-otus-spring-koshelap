@@ -27,6 +27,11 @@ public class QuizImpl implements Quiz {
     }
 
     @Override
+    public List<Double> getScores() {
+        return scores;
+    }
+
+    @Override
     public void addRow(CsvRow row) {
         this.rows.add(row);
     }
