@@ -24,7 +24,7 @@ public class DataTransformer {
         this.quiz = quiz;
     }
 
-    protected CSVParser getParsedCsv() throws IOException {
+    private CSVParser getParsedCsv() throws IOException {
         InputStream is=csvFile.getInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         return CSVFormat.DEFAULT.withDelimiter(DELIMITER).withHeader().parse(br);
