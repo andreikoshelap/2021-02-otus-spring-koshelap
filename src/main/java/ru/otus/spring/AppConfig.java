@@ -9,19 +9,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
 import ru.otus.spring.domain.CsvRow;
+import ru.otus.spring.service.CsvDataTransformer;
 import ru.otus.spring.service.DataTransformer;
 import ru.otus.spring.service.QuizPresentation;
 import ru.otus.spring.ui.Greeting;
-import ru.otus.spring.ui.GreetingsImpl;
+import ru.otus.spring.ui.impl.GreetingImpl;
 import ru.otus.spring.ui.Quiz;
-import ru.otus.spring.ui.QuizImpl;
+import ru.otus.spring.ui.impl.QuizImpl;
 
 @Configuration
 public class AppConfig {
 
     @Bean
     DataTransformer transformer(@Value("${classpath:questionare.csv}") Resource csvFile, Quiz quiz) {
-        return new DataTransformer(csvFile, quiz);
+        return new CsvDataTransformer(csvFile, quiz);
     }
 
     @Bean
@@ -36,7 +37,7 @@ public class AppConfig {
 
     @Bean
     Greeting greeting( MessageSource msg) {
-        return new GreetingsImpl( msg);
+        return new GreetingImpl( msg);
     }
 
 }

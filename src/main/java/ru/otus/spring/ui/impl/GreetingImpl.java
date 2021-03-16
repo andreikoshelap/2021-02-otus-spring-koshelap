@@ -1,4 +1,4 @@
-package ru.otus.spring.ui;
+package ru.otus.spring.ui.impl;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -6,7 +6,9 @@ import java.util.Set;
 
 import org.springframework.context.MessageSource;
 
-public class GreetingsImpl implements Greeting{
+import ru.otus.spring.ui.Greeting;
+
+public class GreetingImpl implements Greeting {
 
     private static final String TITLE_LANGUAGE = "title.language";
     private static final String ET = "et";
@@ -23,7 +25,7 @@ public class GreetingsImpl implements Greeting{
 
     private MessageSource msg;
 
-    public GreetingsImpl(MessageSource msg) {
+    public GreetingImpl(MessageSource msg) {
         this.msg = msg;
     }
 
@@ -34,11 +36,11 @@ public class GreetingsImpl implements Greeting{
                 .forEach(loc -> System.out.println(msg.getMessage(TITLE_LANGUAGE, new String[] {ANSI_BLUE, ANSI_RESET}, loc)));
 
         Scanner in = new Scanner(System.in);
-        switch (in.nextLine().toUpperCase()) {
+        switch (in.nextLine().toLowerCase()) {
             case ET:
                 locale  = new Locale(ET, EE);
                 break;
-            case RU:
+            case SMALL_RU:
                 locale = new Locale(SMALL_RU, RU);
                 break;
             default:

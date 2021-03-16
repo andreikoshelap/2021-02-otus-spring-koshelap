@@ -10,6 +10,8 @@ public interface Quiz {
 
     void addRow(CsvRow row);
 
+    List<CsvRow> getRows();
+
     void questionsOutput();
 
     void setLocale(Locale locale);

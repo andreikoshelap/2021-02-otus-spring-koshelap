@@ -1,4 +1,4 @@
-package ru.otus.spring.ui;
+package ru.otus.spring.ui.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.context.MessageSource;
 
 import ru.otus.spring.domain.CsvRow;
+import ru.otus.spring.ui.Quiz;
 
 public class QuizImpl implements Quiz {
 
@@ -51,6 +52,11 @@ public class QuizImpl implements Quiz {
     @Override
     public List<Double> getScores() {
         return scores;
+    }
+
+    @Override
+    public List<CsvRow> getRows() {
+        return rows;
     }
 
     @Override
