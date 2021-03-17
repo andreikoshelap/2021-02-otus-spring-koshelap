@@ -16,9 +16,9 @@ public class Spring04Application {
 		ApplicationContext context = SpringApplication.run(Spring04Application.class, args);
         DataTransformer transformer = context.getBean(DataTransformer.class);
         QuizPresentation presentation = context.getBean(QuizPresentation.class);
-        transformer.exportData();
-        presentation.defineLanguage();
-        presentation.output();
+//        transformer.exportData();
+//        presentation.defineLanguage();
+//        presentation.output();
 	}
 
 }
