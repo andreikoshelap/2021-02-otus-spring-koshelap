@@ -1,8 +1,8 @@
-package ru.otus.spring.ui;
+package ru.otus.spring.tools;
 
 import java.util.Locale;
 
-public interface Greeting {
+public interface LocaleProvider {
 
     Locale defineWorkingLocale();
 

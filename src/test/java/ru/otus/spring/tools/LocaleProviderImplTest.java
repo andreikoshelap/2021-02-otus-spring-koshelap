@@ -1,4 +1,4 @@
-package ru.otus.spring.ui;
+package ru.otus.spring.tools;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,26 +9,26 @@ import java.util.Locale;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
 import org.springframework.context.MessageSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import ru.otus.spring.AppConfig;
-import ru.otus.spring.ui.impl.GreetingImpl;
+import ru.otus.spring.tools.impl.LocaleProviderImpl;
+import ru.otus.spring.TestContextConfig;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { AppConfig.class, TestContextConfig.class})
-public class GreetingImplTest {
+@ContextConfiguration(classes = { TestContextConfig.class})
+public class LocaleProviderImplTest {
 
-    private Greeting greeting;
-    @Autowired
+    private LocaleProvider localeProvider;
+    @Mock
     private MessageSource msg;
 
 
     @BeforeEach
     void setUp() {
-        greeting = new GreetingImpl(msg);
+        localeProvider = new LocaleProviderImpl(msg);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class GreetingImplTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        Locale locale = greeting.defineWorkingLocale();
+        Locale locale = localeProvider.defineWorkingLocale();
 
         assertThat(locale).isEqualTo(new Locale("et", "EE"));
     }

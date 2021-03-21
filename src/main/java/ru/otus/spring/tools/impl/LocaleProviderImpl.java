@@ -1,14 +1,16 @@
-package ru.otus.spring.ui.impl;
+package ru.otus.spring.tools.impl;
 
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
 
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
 
-import ru.otus.spring.ui.Greeting;
+import ru.otus.spring.tools.LocaleProvider;
 
-public class GreetingImpl implements Greeting {
+@Service
+public class LocaleProviderImpl implements LocaleProvider {
 
     private static final String TITLE_LANGUAGE = "title.language";
     private static final String ET = "et";
@@ -25,7 +27,7 @@ public class GreetingImpl implements Greeting {
 
     private MessageSource msg;
 
-    public GreetingImpl(MessageSource msg) {
+    public LocaleProviderImpl(MessageSource msg) {
         this.msg = msg;
     }
 

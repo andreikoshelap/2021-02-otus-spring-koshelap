@@ -1,43 +1,35 @@
 package ru.otus.spring;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
-import ru.otus.spring.domain.CsvRow;
-import ru.otus.spring.service.CsvDataTransformer;
-import ru.otus.spring.service.DataTransformer;
+import ru.otus.spring.dao.DataMapper;
+import ru.otus.spring.dao.impl.CsvDataMapperImpl;
+import ru.otus.spring.service.Parser;
 import ru.otus.spring.service.QuizPresentation;
-import ru.otus.spring.ui.Greeting;
-import ru.otus.spring.ui.impl.GreetingImpl;
-import ru.otus.spring.ui.Quiz;
-import ru.otus.spring.ui.impl.QuizImpl;
+import ru.otus.spring.service.impl.ParserImpl;
+import ru.otus.spring.tools.LocaleProvider;
+import ru.otus.spring.tools.InputOutputService;
 
 @Configuration
 public class AppConfig {
 
     @Bean
-    DataTransformer transformer(@Value("${classpath:questionare.csv}") Resource csvFile, Quiz quiz) {
-        return new CsvDataTransformer(csvFile, quiz);
+    public Parser parser(@Value("${classpath:questionare.csv}") Resource csvFile) {
+        return new ParserImpl(csvFile);
     }
 
     @Bean
-    QuizPresentation presentation( Quiz quiz, Greeting greeting) {
-        return new QuizPresentation(quiz, greeting);
+    public DataMapper mapper(Parser parser, MessageSource msg, InputOutputService ioService) {
+        return new CsvDataMapperImpl(parser,  msg,  ioService);
     }
 
     @Bean
-    Quiz quiz(List<CsvRow> csvRows, MessageSource msg) {
-        return new QuizImpl(csvRows, msg);
-    }
-
-    @Bean
-    Greeting greeting( MessageSource msg) {
-        return new GreetingImpl( msg);
+    public QuizPresentation presentation(DataMapper mapper, LocaleProvider localeProvider) {
+        return new QuizPresentation(mapper, localeProvider);
     }
 
 }

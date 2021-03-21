@@ -8,10 +8,15 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import ru.otus.spring.domain.CsvRow;
+import ru.otus.spring.tools.InputOutputService;
 import ru.otus.spring.ui.Quiz;
 
+@RequiredArgsConstructor
+@Service
 public class QuizImpl implements Quiz {
 
     private static final String ANSWER_NO_ONE = "A.";
@@ -37,11 +42,13 @@ public class QuizImpl implements Quiz {
     private MessageSource msg;
     private List<Double> scores = new ArrayList<>();
     private Locale locale;
+    private InputOutputService ioService;
 
 
-    public QuizImpl(List<CsvRow> rows, MessageSource msg) {
+    public QuizImpl(List<CsvRow> rows, MessageSource msg, InputOutputService ioService) {
         this.rows = rows;
         this.msg = msg;
+        this.ioService = ioService;
     }
 
     @Override
@@ -57,11 +64,6 @@ public class QuizImpl implements Quiz {
     @Override
     public List<CsvRow> getRows() {
         return rows;
-    }
-
-    @Override
-    public void addRow(CsvRow row) {
-        this.rows.add(row);
     }
 
     @Override
@@ -130,6 +132,6 @@ public class QuizImpl implements Quiz {
     }
 
     private void output( String propertyString, String[] msgParameters) {
-        System.out.println(msg.getMessage(propertyString, msgParameters, locale));
+        ioService.out(msg.getMessage(propertyString, msgParameters, locale));
     }
 }
