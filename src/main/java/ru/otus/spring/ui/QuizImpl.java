@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
 import ru.otus.spring.domain.CsvRow;
 
+@Service
 public class QuizImpl implements Quiz {
 
     private static final String ANSWER_NO_ONE = "A.";
