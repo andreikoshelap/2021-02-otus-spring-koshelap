@@ -1,7 +1,6 @@
 package ru.otus.spring.tools.impl;
 
 import java.util.Locale;
-import java.util.Scanner;
 import java.util.Set;
 
 import org.springframework.context.MessageSource;
@@ -32,13 +31,12 @@ public class LocaleProviderImpl implements LocaleProvider {
     }
 
     @Override
-    public Locale defineWorkingLocale() {
+    public Locale defineWorkingLocale(String  key) {
         Locale locale = Locale.ENGLISH;
         AVAILABLE_LOCALES.stream()
                 .forEach(loc -> System.out.println(msg.getMessage(TITLE_LANGUAGE, new String[] {ANSI_BLUE, ANSI_RESET}, loc)));
 
-        Scanner in = new Scanner(System.in);
-        switch (in.nextLine().toLowerCase()) {
+        switch (key.toLowerCase()) {
             case ET:
                 locale  = new Locale(ET, EE);
                 break;

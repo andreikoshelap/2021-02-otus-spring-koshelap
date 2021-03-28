@@ -7,19 +7,21 @@ import java.io.InputStreamReader;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import ru.otus.spring.service.Parser;
 
-
+@Service
+@RequiredArgsConstructor
 public class ParserImpl implements Parser {
 
+
+    @Value("${classpath:questionare.csv}")
     private final Resource csvFile;
     private static final char DELIMITER = ';';
-
-    public ParserImpl(Resource csvFile) {
-        this.csvFile = csvFile;
-    }
 
     @Override
     public CSVParser getParsedCsv() throws IOException {

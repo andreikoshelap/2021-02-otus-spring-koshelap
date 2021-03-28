@@ -18,7 +18,7 @@ public class QuizPresentation {
 
     public void executeExam()  throws IOException {
         quiz = getQuiz();
-        defineLanguage();
+//        defineLanguage();
         output();
     }
 
@@ -26,9 +26,9 @@ public class QuizPresentation {
         return mapper.dataMapping();
     }
 
-    private void defineLanguage() {
-        quiz.setLocale(localeProvider.defineWorkingLocale());
-    }
+//    private void defineLanguage() {
+//        quiz.setLocale(localeProvider.defineWorkingLocale());
+//    }
 
     private void output() {
         quiz.questionsOutput();

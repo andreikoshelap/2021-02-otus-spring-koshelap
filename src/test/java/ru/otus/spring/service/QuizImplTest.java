@@ -12,17 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.context.MessageSource;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ru.otus.spring.domain.CsvRow;
 import ru.otus.spring.tools.InputOutputService;
 import ru.otus.spring.ui.Quiz;
-import ru.otus.spring.TestContextConfig;
 import ru.otus.spring.ui.impl.QuizImpl;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { TestContextConfig.class})
 public class QuizImplTest {
 
     private Quiz quiz;

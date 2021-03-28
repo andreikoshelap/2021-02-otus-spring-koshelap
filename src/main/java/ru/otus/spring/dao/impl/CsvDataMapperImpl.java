@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Component;
 
 import ru.otus.spring.dao.DataMapper;
 import ru.otus.spring.domain.CsvRow;
@@ -13,6 +14,7 @@ import ru.otus.spring.tools.InputOutputService;
 import ru.otus.spring.ui.Quiz;
 import ru.otus.spring.ui.impl.QuizImpl;
 
+@Component
 public class CsvDataMapperImpl implements DataMapper {
 
     private Parser parser;

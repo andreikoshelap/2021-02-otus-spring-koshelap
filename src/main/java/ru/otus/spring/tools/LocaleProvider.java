@@ -4,6 +4,6 @@ import java.util.Locale;
 
 public interface LocaleProvider {
 
-    Locale defineWorkingLocale();
+    Locale defineWorkingLocale(String  key);
 
 }
