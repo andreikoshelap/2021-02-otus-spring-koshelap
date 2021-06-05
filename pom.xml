@@ -15,6 +15,8 @@
 	<description>homework for course Spring framework developer </description>
 	<properties>
 		<java.version>11</java.version>
+		<org.aspectj.aspectjrt.version>1.8.9</org.aspectj.aspectjrt.version>
+		<org.aspectj.aspectjweaver.version>1.8.9</org.aspectj.aspectjweaver.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -45,6 +47,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj.aspectjrt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${org.aspectj.aspectjweaver.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
 		<dependency>

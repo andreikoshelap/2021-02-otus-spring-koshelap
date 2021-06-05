@@ -1,16 +1,17 @@
 package ru.otus.spring.ui;
 
+import java.util.List;
 import java.util.Locale;
 
-import java.util.List;
-
+import ru.otus.spring.domain.Applicant;
 import ru.otus.spring.domain.CsvRow;
+import ru.otus.spring.domain.QuizResult;
 
 public interface Quiz {
 
     List<CsvRow> getRows();
 
-    void questionsOutput();
+    QuizResult questionsOutput(Applicant applicant);
 
     void setLocale(Locale locale);
 

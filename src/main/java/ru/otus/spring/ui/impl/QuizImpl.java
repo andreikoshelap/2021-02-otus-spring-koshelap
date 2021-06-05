@@ -11,7 +11,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import ru.otus.spring.domain.Applicant;
 import ru.otus.spring.domain.CsvRow;
+import ru.otus.spring.domain.QuizResult;
 import ru.otus.spring.tools.InputOutputService;
 import ru.otus.spring.ui.Quiz;
 
@@ -67,7 +69,8 @@ public class QuizImpl implements Quiz {
     }
 
     @Override
-    public void questionsOutput() {
+    public QuizResult questionsOutput(Applicant applicant) {
+
         rows.stream().forEach(p ->{
             System.out.println(p.getNo());
             System.out.println(p.getQuestion());
@@ -83,6 +86,7 @@ public class QuizImpl implements Quiz {
             acceptAndMatchAnswer(p);
         });
         output(QUIZ_RESULT, new String[] {ANSI_RED,  String.valueOf(getResult(scores)), ANSI_RESET } );
+        return new QuizResult(applicant, scores);
     }
 
 

@@ -9,38 +9,56 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 
 import lombok.RequiredArgsConstructor;
-import ru.otus.spring.event.publisher.CsvPublisher;
+import ru.otus.spring.domain.Applicant;
 import ru.otus.spring.event.publisher.LanguageEventPublisher;
+import ru.otus.spring.service.QuizPresentation;
 
 @ShellComponent
 @RequiredArgsConstructor
 public class ApplicationEventsCommands {
 
     private final LanguageEventPublisher languageEventPublisher;
-    private final CsvPublisher csvPublisher;
-    private String userName;
+//    private final CsvPublisher csvPublisher;
+//    private final Quiz quiz;
+    private final QuizPresentation quizPresentation;
+    private Applicant applicant;
+    private String languageKey;
 
     @ShellMethod(value = "Login command", key = {"l", "login"})
-    public String login(@ShellOption(defaultValue = "Dear reader") String userName) throws IOException {
-        this.userName = userName;
-//        csvPublisher.prepareQiuz();
-        return String.format("Welcome, %s", userName);
+    public String login( @ShellOption(defaultValue = "John") String firstName,
+            @ShellOption(defaultValue = "Doe") String lastName) {
+        this.applicant = new Applicant(firstName, lastName);
+        return String.format("Welcome, %s %s", firstName, lastName);
     }
 
     @ShellMethod(value = "Pick language for test", key = {"lang", "language"})
     @ShellMethodAvailability(value = "isPublishEventCommandAvailable")
-    public void publishEvent(@ShellOption(defaultValue = "classic") String languageKey) {
+    public void publishEvent(@ShellOption(defaultValue = "EN") String languageKey) {
+        this.languageKey = languageKey;
         languageEventPublisher.publishLanguage(languageKey);
     }
 
-//    @ShellMethod(value = "Show available books", key = {"b", "book", "books"})
-//    @ShellMethodAvailability(value = "isPublishEventCommandAvailable")
-//    public String publishBooks(@ShellOption(defaultValue = "classic") String genreKey) {
-//        booksPublisher.publishBooks(genreKey);
-//        return "Pick another genre";
-//    }
+    @ShellMethod(value = "Start test", key = { "t" })
+    @ShellMethodAvailability(value = "isLanguageChosen")
+    public void publishTest() {
+//        QuizPresentationImpl presentation = context.getBean(QuizPresentationImpl.class);
+        try {
+            quizPresentation.executeExam(applicant);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        try {
+//            csvPublisher.prepareQiuz();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
 
     private Availability isPublishEventCommandAvailable() {
-        return userName == null? Availability.unavailable("First login"): Availability.available();
+        return applicant == null? Availability.unavailable("First login"): Availability.available();
+    }
+
+    private Availability isLanguageChosen() {
+        return languageKey == null? Availability.unavailable("Choose language"): Availability.available();
     }
 }

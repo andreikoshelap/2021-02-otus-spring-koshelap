@@ -15,6 +15,6 @@ public class CsvEvent extends ApplicationEvent {
 
     public CsvEvent(Object source, DataMapper mapper) throws IOException {
         super(source);
-        payload = mapper.dataMapping();;
+        payload = mapper.dataMapping();
     }
 }
